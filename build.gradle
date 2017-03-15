@@ -15,31 +15,36 @@ apply plugin: 'com.bmuschko.tomcat'
 sourceCompatibility = 1.8
 version = '1.0'
 war.baseName = 'spring-security-test'
-project.webAppDirName = 'WebContent'
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-sourceSets {
-        main {
-            java {
-                srcDir 'src'
-            }
-        }
-}
-
 dependencies {
-    def tomcatVersion = '7.0.57'
+    compile "org.springframework:spring-aop:4.+"
+    compile "org.springframework:spring-core:4.+"
+    compile "org.springframework:spring-context:4.+"
+    compile "org.springframework:spring-instrument:4.+"
+    compile "org.springframework:spring-webmvc:4.+"
+    compile "org.springframework:spring-web:4.+"
+    compile "org.springframework:spring-oxm:4.+"
+    compile "jstl:jstl:1.2"
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+    compile "javax.servlet.jsp:jsp-api:2.2"
+
+    def tomcatVersion = '8.0.41'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-    }
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     testCompile 'junit:junit:4.12'
 }
 
-tomcatRun.contextPath = '/'
-tomcatRunWar.contextPath = '/'
+tomcatRun.contextPath = '/springtest/'
+tomcatRunWar.contextPath = '/springtest/'
+
+task createResourcesDir << {
+    sourceSets.main.output.resourcesDir.mkdirs()
+}
+tomcatRun.dependsOn createResourcesDir
