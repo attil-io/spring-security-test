@@ -2,6 +2,7 @@ package com.springsecuritytest.web;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.springsecuritytest.config.SecurityConfiguration;
 import com.springsecuritytest.config.ServiceConfiguration;
 import com.springsecuritytest.config.WebConfig;
 
@@ -9,7 +10,7 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { ServiceConfiguration.class };
+		return new Class<?>[] { SecurityConfiguration.class, ServiceConfiguration.class };
 	}
 
 	@Override
